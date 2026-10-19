@@ -56,21 +56,20 @@ pipeline {
         }
 
         stage('Security Test - Dependency-Check') {
-    steps {
-        script {
-            // Enlazamos la credencial guardada en Jenkins a una variable de entorno temporal
-            withCredentials([string(credentialsId: 'NVD_API_KEY', variable: 'NVD_KEY')]) {
-                
-                // Agregamos obligatoriamente el parámetro --nvdApiKey pasándole la variable
-                def odcArgs = "--project \"proyecto-devsecops\" --scan \"venv/Lib/site-packages\" -f XML -f HTML --nvdApiKey \"${NVD_KEY}\""
-                
-                dependencyCheck additionalArguments: odcArgs,
-                                odcInstallation: 'Dependency-Check'
+            steps {
+                script {
+                    def odcArgs = [
+                        '--scan venv\\Lib\\site-packages',
+                        '--format HTML --format XML',
+                        "--data ${env.ODC_DATA} --noupdate"
+                    ].join(' ')
+                    dependencyCheck additionalArguments: odcArgs,
+                                    odcInstallation: 'dependency-check'
+                }
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
             }
         }
-        dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-    }
-}
+
 
         stage('Deploy') {
             steps {
