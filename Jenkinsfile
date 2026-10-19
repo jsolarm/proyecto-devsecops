@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         // Ajuste estas rutas a su equipo
-        PYTHON   = 'C:\\Users\\Docencia\\AppData\\Local\\Python\\bin'
+        PYTHON   = 'C:\\Users\\Docencia\\AppData\\Local\\Python\\bin\\python.exe'
         ODC_DATA = 'C:\\tools\\odc-data'
         ZAP_DIR  = 'C:\\Program Files\\ZAP\\Zed Attack Proxy'
         APP_URL  = 'http://localhost:8080/hello?name=test'
