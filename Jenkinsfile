@@ -58,13 +58,15 @@ pipeline {
         stage('Security Test - Dependency-Check') {
     steps {
         script {
-            // Unificamos todo en una sola cadena limpia sin arreglos complejos
-            // Nota: Para simplificar, generamos únicamente el reporte XML que Jenkins necesita leer
-            def odcArgs = '--scan "venv/Lib/site-packages" --format XML --data "C:/tools/odc-data" --autoUpdate'
+            // 1. Quitamos --autoUpdate (ya que da error)
+            // 2. Añadimos obligatoriamente el nombre del proyecto (--project)
+            // 3. Pasamos los formatos requeridos repitiendo la bandera -f según la ayuda de tu log
+            def odcArgs = '--project "MiProyecto" --scan "venv/Lib/site-packages" -f XML -f HTML'
             
             dependencyCheck additionalArguments: odcArgs,
                             odcInstallation: 'Dependency-Check'
         }
+        // Buscamos el reporte xml en la raíz o cualquier subcarpeta
         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
     }
 }
