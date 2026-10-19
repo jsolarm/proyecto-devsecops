@@ -58,18 +58,13 @@ pipeline {
         stage('Security Test - Dependency-Check') {
     steps {
         script {
-            // Usamos barras normales (/) que Windows y Java entienden sin problemas de escape
-            def odcArgs = [
-                '--scan "venv/Lib/site-packages"',
-                '--format HTML --format XML',
-                '--data "C:/tools/odc-data"',
-                '--autoUpdate'
-            ].join(' ')
+            // Unificamos todo en una sola cadena limpia sin arreglos complejos
+            // Nota: Para simplificar, generamos únicamente el reporte XML que Jenkins necesita leer
+            def odcArgs = '--scan "venv/Lib/site-packages" --format XML --data "C:/tools/odc-data" --autoUpdate'
             
             dependencyCheck additionalArguments: odcArgs,
                             odcInstallation: 'Dependency-Check'
         }
-        // Buscamos el reporte en cualquier subcarpeta del espacio de trabajo
         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
     }
 }
