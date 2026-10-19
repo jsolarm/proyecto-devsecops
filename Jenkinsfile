@@ -9,7 +9,7 @@ pipeline {
     environment {
         // Ajuste estas rutas a su equipo
         PYTHON   = 'C:\\Users\\Docencia\\AppData\\Local\\Python\\bin\\python.exe'
-        ODC_DATA = 'C:\\tools\\dependency-check\\bin\\odc-data'
+        ODC_DATA = 'C:\\tools\\odc-data'
         ZAP_DIR  = 'C:\\Program Files\\ZAP\\Zed Attack Proxy'
         APP_URL  = 'http://localhost:8080/hello?name=test'
         // Evita que Jenkins elimine la aplicacion desplegada
@@ -64,7 +64,7 @@ pipeline {
                         "--data ${env.ODC_DATA} --noupdate"
                     ].join(' ')
                     dependencyCheck additionalArguments: odcArgs,
-                                    odcInstallation: 'dependency-check'
+                                    odcInstallation: 'Dependency-Check'
                 }
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
             }
