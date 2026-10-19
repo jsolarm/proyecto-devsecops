@@ -8,10 +8,10 @@ pipeline {
 
     environment {
         // Ajuste estas rutas a su equipo
-        PYTHON   = 'C:\\Python311\\python.exe'
+        PYTHON   = 'C:\Users\Docencia\AppData\Local\Python\bin'
         ODC_DATA = 'C:\\tools\\odc-data'
         ZAP_DIR  = 'C:\\Program Files\\ZAP\\Zed Attack Proxy'
-        APP_URL  = 'http://localhost:5000/hello?name=test'
+        APP_URL  = 'http://localhost:8080/hello?name=test'
         // Evita que Jenkins elimine la aplicacion desplegada
         JENKINS_NODE_COOKIE = 'dontKillMe'
     }
