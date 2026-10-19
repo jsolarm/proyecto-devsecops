@@ -61,7 +61,7 @@ pipeline {
                     def odcArgs = [
                         '--scan venv\\Lib\\site-packages',
                         '--format HTML --format XML',
-                        "--data ${env.ODC_DATA} --noupdate"
+                        "--data ${env.ODC_DATA} --autoupdate"
                     ].join(' ')
                     dependencyCheck additionalArguments: odcArgs,
                                     odcInstallation: 'Dependency-Check'
