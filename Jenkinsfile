@@ -56,19 +56,23 @@ pipeline {
         }
 
         stage('Security Test - Dependency-Check') {
-            steps {
-                script {
-                    def odcArgs = [
-                        '--scan venv\\Lib\\site-packages',
-                        '--format HTML --format XML',
-                        "--data ${env.ODC_DATA} --autoupdate"
-                    ].join(' ')
-                    dependencyCheck additionalArguments: odcArgs,
-                                    odcInstallation: 'Dependency-Check'
-                }
-                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-            }
+    steps {
+        script {
+            // Usamos barras normales (/) que Windows y Java entienden sin problemas de escape
+            def odcArgs = [
+                '--scan "venv/Lib/site-packages"',
+                '--format HTML --format XML',
+                '--data "C:/tools/odc-data"',
+                '--autoUpdate'
+            ].join(' ')
+            
+            dependencyCheck additionalArguments: odcArgs,
+                            odcInstallation: 'Dependency-Check'
         }
+        // Buscamos el reporte en cualquier subcarpeta del espacio de trabajo
+        dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+    }
+}
 
         stage('Deploy') {
             steps {
