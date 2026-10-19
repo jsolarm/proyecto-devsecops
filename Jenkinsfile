@@ -62,7 +62,7 @@ pipeline {
             withCredentials([string(credentialsId: 'NVD_API_KEY', variable: 'NVD_KEY')]) {
                 
                 // Agregamos obligatoriamente el parámetro --nvdApiKey pasándole la variable
-                def odcArgs = "--project \"MiProyecto\" --scan \"venv/Lib/site-packages\" -f XML -f HTML --nvdApiKey \"${NVD_KEY}\""
+                def odcArgs = "--project \"proyecto-devsecops\" --scan \"venv/Lib/site-packages\" -f XML -f HTML --nvdApiKey \"${NVD_KEY}\""
                 
                 dependencyCheck additionalArguments: odcArgs,
                                 odcInstallation: 'Dependency-Check'
