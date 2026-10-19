@@ -58,15 +58,16 @@ pipeline {
         stage('Security Test - Dependency-Check') {
     steps {
         script {
-            // 1. Quitamos --autoUpdate (ya que da error)
-            // 2. Añadimos obligatoriamente el nombre del proyecto (--project)
-            // 3. Pasamos los formatos requeridos repitiendo la bandera -f según la ayuda de tu log
-            def odcArgs = '--project "MiProyecto" --scan "venv/Lib/site-packages" -f XML -f HTML'
-            
-            dependencyCheck additionalArguments: odcArgs,
-                            odcInstallation: 'Dependency-Check'
+            // Enlazamos la credencial guardada en Jenkins a una variable de entorno temporal
+            withCredentials([string(credentialsId: 'NVD_API_KEY', variable: 'NVD_KEY')]) {
+                
+                // Agregamos obligatoriamente el parámetro --nvdApiKey pasándole la variable
+                def odcArgs = "--project \"MiProyecto\" --scan \"venv/Lib/site-packages\" -f XML -f HTML --nvdApiKey \"${NVD_KEY}\""
+                
+                dependencyCheck additionalArguments: odcArgs,
+                                odcInstallation: 'Dependency-Check'
+            }
         }
-        // Buscamos el reporte xml en la raíz o cualquier subcarpeta
         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
     }
 }
