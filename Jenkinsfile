@@ -11,7 +11,7 @@ pipeline {
         PYTHON   = 'C:\\Users\\Docencia\\AppData\\Local\\Python\\bin\\python.exe'
         ODC_DATA = 'C:\\tools\\odc-data'
         ZAP_DIR  = 'C:\\Program Files\\ZAP\\Zed Attack Proxy'
-        APP_URL  = 'http://localhost:8080/hello?name=test'
+        APP_URL  = 'http://localhost:8088/hello?name=test'
         // Evita que Jenkins elimine la aplicacion desplegada
         JENKINS_NODE_COOKIE = 'dontKillMe'
     }
@@ -58,7 +58,7 @@ pipeline {
         stage('Security Test - Dependency-Check') {
             steps {
                 dependencyCheck(
-                    additionalArguments: "--scan venv/Lib/site-packages --format HTML --format XML --data C:\\Tools --noupdate",
+                    additionalArguments: "--scan venv/Lib/site-packages --format HTML --format XML --data C:\\Tools --update",
                     odcInstallation: 'dependency-check'
                 )
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
