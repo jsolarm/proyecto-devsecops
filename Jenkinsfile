@@ -55,7 +55,6 @@ pipeline {
             }
         }
 
-    stages {
         stage('Security Test - Dependency-Check') {
             steps {
                 dependencyCheck(
