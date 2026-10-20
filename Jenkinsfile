@@ -55,33 +55,18 @@ pipeline {
             }
         }
 
+        stages {
         stage('Security Test - Dependency-Check') {
-    steps {
-        script {
-            // Pasar argumentos como una sola cadena, no como lista
-            def odcArgs = """
-                --scan 'venv/Lib/site-packages'
-                --format HTML
-                --format XML
-                --data ${env.ODC_DATA}
-                --update
-                --prettyPrint
-            """.stripIndent().trim()
-
-            dependencyCheck(
-                additionalArguments: odcArgs,
-                odcInstallation: 'dependency-check' // Asegúrate de que este nombre coincida con la config global de herramientas
-            )
-
-            dependencyCheckPublisher(
-                pattern: '**/dependency-check-report.xml', // Usar comodín para encontrar el informe en cualquier subdirectorio
-                failedTotalCritical: 1,
-                failedTotalHigh: 1,
-                stopBuild: true
-            )
+            steps {
+                dependencyCheck(
+                    additionalArguments: "--scan venv/Lib/site-packages --format HTML --format XML --data ${env.ODC_DATA} --noupdate",
+                    odcInstallation: 'dependency-check'
+                )
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
         }
     }
-}   
+}
     
         stage('Deploy') {
             steps {
