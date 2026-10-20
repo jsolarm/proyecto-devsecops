@@ -55,17 +55,17 @@ pipeline {
             }
         }
 
-        stages {
+    stages {
         stage('Security Test - Dependency-Check') {
             steps {
                 dependencyCheck(
-                    additionalArguments: "--scan venv/Lib/site-packages --format HTML --format XML --data ${env.ODC_DATA} --noupdate",
+                    additionalArguments: "--scan venv/Lib/site-packages --format HTML --format XML --data C:\\Tools --noupdate",
                     odcInstallation: 'dependency-check'
                 )
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
-    }
+    }   
     
         stage('Deploy') {
             steps {
