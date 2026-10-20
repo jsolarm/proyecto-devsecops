@@ -15,9 +15,9 @@ Start-Process @params
 # Esperar hasta 30 segundos a que la aplicacion responda
 for ($i = 0; $i -lt 15; $i++) {
 try {
-Invoke-WebRequest -Uri 'http://localhost:8088/hello?name=test' `
+Invoke-WebRequest -Uri 'http://localhost:8080/hello?name=test' `
 -UseBasicParsing | Out-Null
-Write-Host 'Aplicacion disponible en http://localhost:8088'
+Write-Host 'Aplicacion disponible en http://localhost:8080'
 exit 0
 } catch {
 Start-Sleep -Seconds 2
