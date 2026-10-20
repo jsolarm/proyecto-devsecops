@@ -58,7 +58,7 @@ pipeline {
         stage('Security Test - Dependency-Check') {
             steps {
                 dependencyCheck(
-                    additionalArguments: "--scan venv/Lib/site-packages --format HTML --format XML --data C:\\Tools --noupdate --exclusionFilter exclusion.xml",
+                    additionalArguments: "--scan venv/Lib/site-packages --format HTML --format XML --data C:\\Tools --noupdate --suppression exclusion.xml",
                     odcInstallation: 'dependency-check'
                 )
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
