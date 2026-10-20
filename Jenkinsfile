@@ -58,7 +58,7 @@ pipeline {
         stage('Security Test - Dependency-Check') {
             steps {
                 dependencyCheck(
-                    additionalArguments: "--scan venv/Lib/site-packages --format HTML --format XML --data C:\\Tools --noupdate --disableAssemblyScan",
+                    additionalArguments: "--scan venv/Lib/site-packages --format HTML --format XML --data C:\\Tools --noupdate --exclude \"*.dll\" --exclude \"*.exe\"",
                     odcInstallation: 'dependency-check'
                 )
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
